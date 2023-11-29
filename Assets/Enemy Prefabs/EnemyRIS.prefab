@@ -172,6 +172,7 @@ MonoBehaviour:
   body: {fileID: 4246982271295444371}
   JumpForce: 900
   DodgeForce: 10
+  CrouchDodgeForce: 0
   groundCheck: {fileID: 5318375141119815481}
   groundLayer:
     serializedVersion: 2

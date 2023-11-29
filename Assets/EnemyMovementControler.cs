@@ -40,6 +40,9 @@ public bool Lockgrounddetect = false; // bool för att låsa ground detect så d
      float DodgeForce = 0f;
 
      [SerializeField]
+     float CrouchDodgeForce = 0f;
+
+     [SerializeField]
      Transform groundCheck;
 
      [SerializeField]
@@ -85,10 +88,12 @@ public bool Lockgrounddetect = false; // bool för att låsa ground detect så d
     bool allowjump = Physics2D.OverlapBox(groundCheck.position, size, 0, groundLayer);
 if (allowjump == true)
 {
+    animcontrol.SetBool("Jumping", false);
     animcontrol.SetBool("Walking", true);
 }
 else
 {
+   animcontrol.SetBool("Jumping", true);
    animcontrol.SetBool("Walking", false);
 }
     //Patrol rörelse KOD (Rörelse fram och tillbaka)
@@ -145,6 +150,42 @@ if(body.velocity.x > 12.5f && patrolswitch == true) // Left dodge
     ReactNumber = 0;
     dodgeprio = false;
 }
+}
+
+
+//Crouch Dodge
+if(ReactNumber == 2)
+{
+    animcontrol.SetBool("Crouch", true);
+    dodgeprio = true;
+    Vector2 CrouchDodgeL = Vector2.left * CrouchDodgeForce;
+    Vector2 CrouchDodgeR = Vector2.right * CrouchDodgeForce;
+
+   
+    if(patrolswitch == false)
+    {
+     body.AddForce(CrouchDodgeR);
+     if(body.velocity.x > 7.5f)
+     {
+        dodgeprio = false;
+        ReactNumber = 0;
+        animcontrol.SetBool("Crouch", false);
+
+     }
+    }
+    if(patrolswitch == true)
+    {
+        print("Moving left");
+     body.AddForce(CrouchDodgeL);
+     if(body.velocity.x > 7.5f)
+     {
+        dodgeprio = false;
+        ReactNumber = 0;
+        animcontrol.SetBool("Crouch", false);
+     }
+
+    }
+
 }
 
 
