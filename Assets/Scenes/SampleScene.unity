@@ -2512,16 +2512,8 @@ PrefabInstance:
       value: Ondrisguy
       objectReference: {fileID: 0}
     - target: {fileID: 6302961464770338911, guid: b1b3dccf2d4f245cd8aa717f41b4c168, type: 3}
-      propertyPath: dodgeprio
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6302961464770338911, guid: b1b3dccf2d4f245cd8aa717f41b4c168, type: 3}
-      propertyPath: DodgeForce
+      propertyPath: CrouchDodgeForce
       value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6302961464770338911, guid: b1b3dccf2d4f245cd8aa717f41b4c168, type: 3}
-      propertyPath: ReactNumber
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
