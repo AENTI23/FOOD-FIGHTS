@@ -128,6 +128,7 @@ else
         RandomNumberLock = true;
     }
 
+
 if(ReactNumber == 1)
 {
  Vector2 DodgeV = Vector2.right * DodgeForce;
