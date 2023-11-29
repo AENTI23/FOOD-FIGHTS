@@ -23,6 +23,7 @@ TagManager:
   - MapButton
   - DiffButton
   - Floortag
+  - Walltag
   layers:
   - Default
   - TransparentFX

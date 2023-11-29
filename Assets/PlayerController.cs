@@ -198,7 +198,7 @@ if (bollfire > 0 && shtimer > 1)
 }
 // Swift attack KOD
 Swiftshtimer += Time.deltaTime;
-        if (swiftfire > 0 && Swiftshtimer > 8f)
+        if (swiftfire > 0 && Swiftshtimer > 4f)
         {
             swiftbool = true;
           Instantiate(Swiftbolt, ricespawn.transform.position, Quaternion.identity);

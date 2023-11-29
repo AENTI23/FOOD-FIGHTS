@@ -87,7 +87,7 @@ public class Risenemycontrol : MonoBehaviour
         }
         if(Other.gameObject.tag == "Risboll_Tag")
         {
-            risbollscript.damagecheck = true;
+            //risbollscript.damagecheck = true;
             currenthp -= 1;
             HP.value = currenthp;
             Debug.Log("ENEMYHP" + currenthp);

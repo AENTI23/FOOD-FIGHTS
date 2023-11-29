@@ -108,7 +108,7 @@ MonoBehaviour:
   swiftbool: 0
   movespeed: 6
   crouchspeed: 3
-  Swiftbolt: {fileID: 0}
+  Swiftbolt: {fileID: 1304031368206224308, guid: a180c9766cf124b3cb4c5606bd7ca8c4, type: 3}
   Risboll: {fileID: 2692222180883232148, guid: f04042108b9604ba699d91f26b66533d, type: 3}
   Tracker: {fileID: 6994192400477233679, guid: 49bd4def68b774be3a2371b61f863645, type: 3}
   shtimer: 0
@@ -392,7 +392,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.018164314, y: -0.606828}
+  m_Offset: {x: -0.017046876, y: -0.606828}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -403,7 +403,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.4972412, y: 0.551316}
+  m_Size: {x: 0.42681885, y: 0.551316}
   m_EdgeRadius: 0
 --- !u!58 &625595160468092557
 CircleCollider2D:
@@ -535,7 +535,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.008117119}
+  m_Offset: {x: 0.044608746, y: -0.008117119}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -546,5 +546,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.022647463}
+  m_Size: {x: 0.2371952, y: 0.022647463}
   m_EdgeRadius: 0

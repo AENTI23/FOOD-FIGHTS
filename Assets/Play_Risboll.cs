@@ -38,6 +38,10 @@ public class Realrisboll : MonoBehaviour
           Destroy(this.gameObject);
           //print("player: I SHOULD DIE NOW");
         }
+        if(Other.gameObject.tag == "Evilricetag")
+        {
+          Destroy(this.gameObject);
+        }
 
 
 // Side och Top tags för fiende, kan användas för att lägga till splash/damage effekt på just de ställen som blivit skadade

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5566679800493759646}
   - component: {fileID: -948679174468311797}
   - component: {fileID: 1838416227464451923}
+  - component: {fileID: 2635386233945078626}
   m_Layer: 0
   m_Name: Player bolt
   m_TagString: Risboll_Tag
@@ -98,3 +99,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explode: {fileID: 0}
+--- !u!60 &2635386233945078626
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304031368206224308}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.4421739, y: 0.1378657}
+      - {x: 0.32624447, y: 0.25486183}
+      - {x: 0.32, y: 0.26541546}
+      - {x: -0.32379422, y: 0.26217392}
+      - {x: -0.35841838, y: 0.22648308}
+      - {x: -0.4421739, y: 0.14379421}
+      - {x: -0.44865602, y: 0.07023765}
+      - {x: -0.44458547, y: 0.013755532}
+      - {x: -0.32351786, y: -0.10703575}
+      - {x: 0.29731208, y: -0.10379421}
+      - {x: 0.3240715, y: -0.10189758}
+      - {x: 0.44379514, y: 0.016205788}
+  m_UseDelaunayMesh: 0

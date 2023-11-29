@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -40,6 +42,19 @@ public bool Lockgrounddetect = false; // bool för att låsa ground detect så d
      float DodgeForce = 0f;
 
      [SerializeField]
+     float DodgeStartPos = 0f;
+
+     [SerializeField]
+     float DodgeStopFinal = 0f;
+
+     bool StartPosGotten = false;
+
+     bool touchedwall = false;
+
+     [SerializeField]
+     float DodgeStopLimit = 0;
+
+     [SerializeField]
      float CrouchDodgeForce = 0f;
 
      [SerializeField]
@@ -59,8 +74,18 @@ public bool Lockgrounddetect = false; // bool för att låsa ground detect så d
 
      Animator animcontrol;
 
+     
 
 
+void OnTriggerEnter2D(Collider2D Other)
+{
+    if(Other.gameObject.tag == "Walltag" && StartPosGotten == true)
+    {
+        touchedwall = true;
+
+    }
+
+}
     // Start is called before the first frame update
     void Start()
     {
@@ -88,8 +113,8 @@ public bool Lockgrounddetect = false; // bool för att låsa ground detect så d
     bool allowjump = Physics2D.OverlapBox(groundCheck.position, size, 0, groundLayer);
 if (allowjump == true)
 {
-    animcontrol.SetBool("Jumping", false);
-    animcontrol.SetBool("Walking", true);
+  animcontrol.SetBool("Jumping", false);
+  animcontrol.SetBool("Walking", true);
 }
 else
 {
@@ -110,7 +135,6 @@ else
         {
             patrolswitch = true;
             animcontrol.SetFloat("SideSwitchFloat", -1);
-
         }
         if (transform.position.x < 1f)
         {
@@ -136,19 +160,47 @@ else
 
 if(ReactNumber == 1)
 {
- Vector2 DodgeV = Vector2.right * DodgeForce;
- body.AddForce(DodgeV);
+    float DodgeSave1 = 0f;
+    float dodgecurrentpos;
  dodgeprio = true;
- //print("move force" + body.velocity.x);
- if(body.velocity.x > 5 && patrolswitch == false)//Right dodge
+ Vector2 DodgeV = Vector2.right * DodgeForce;
+ if(StartPosGotten == false)
+ {
+    DodgeStartPos = body.transform.position.x;
+    DodgeSave1 += DodgeStartPos;
+    DodgeSave1 += DodgeStopLimit;
+     DodgeStopFinal += DodgeSave1;
+    StartPosGotten = true;
+    print("Start position" + DodgeStartPos);
+    print("Stop Position" + DodgeStopFinal);
+ }
+ body.AddForce(DodgeV);
+ dodgecurrentpos = body.transform.position.x;
+if (StartPosGotten == true)
 {
-    ReactNumber = 0;
+ print("Current pos" + transform.position.x);
+ if(dodgecurrentpos > DodgeStopFinal && patrolswitch == false || touchedwall == true)//Dodge to the left
+{
     dodgeprio = false;
+    DodgeStartPos = 0;
+    body.constraints = RigidbodyConstraints2D.FreezePositionX;
 }
-if(body.velocity.x > 12.5f && patrolswitch == true) // Left dodge
+if(dodgecurrentpos > DodgeStopFinal && patrolswitch == true || touchedwall == true) // Dodge to the right 
 {
-    ReactNumber = 0;
     dodgeprio = false;
+    DodgeStartPos = 0;
+    body.constraints = RigidbodyConstraints2D.FreezePositionX;
+}
+}
+if(dodgeprio == false)
+{
+    body.constraints = RigidbodyConstraints2D.None;
+    StartPosGotten = false;
+    touchedwall = false;
+    dodgecurrentpos = 0;
+    DodgeStopFinal = 0;
+    DodgeSave1 = 0;
+    ReactNumber = 0;
 }
 }
 
@@ -161,7 +213,6 @@ if(ReactNumber == 2)
     Vector2 CrouchDodgeL = Vector2.left * CrouchDodgeForce;
     Vector2 CrouchDodgeR = Vector2.right * CrouchDodgeForce;
 
-   
     if(patrolswitch == false)
     {
      body.AddForce(CrouchDodgeR);
@@ -170,7 +221,6 @@ if(ReactNumber == 2)
         dodgeprio = false;
         ReactNumber = 0;
         animcontrol.SetBool("Crouch", false);
-
      }
     }
     if(patrolswitch == true)
@@ -187,60 +237,6 @@ if(ReactNumber == 2)
     }
 
 }
-
-
-
-
-    /* REACT 1 (Dodge) KOD
-
-      bool dodgeactive = false;
-
-     bool keepleft = false;
-
-     bool keepright = false;
-
-        float DodgeSpeed = 3.5f;
-
-        Vector2 DodgeMove = new Vector2(DodgeSpeed, 0);       
-
-       if (ReactNumber == 1f)
-       {
-        dodgeprio = true;
-        dodgeactive = true;
-
-       
-        if (dodgestop == false && transform.position.x > 6 && keepright == false) //Dodgerörelsen // ifall den är på höger sida rör den sig mot mitten
-        {
-        transform.Translate(-DodgeMove * DodgeSpeed * Time.deltaTime); 
-        keepleft = true;
-        }
-        if (dodgestop == false && transform.position.x < 7 && keepleft == false) //Dodgerörelsen // ifall den är på vänster sida rör den sig mot kanten
-        {
-        transform.Translate(DodgeMove * DodgeSpeed * Time.deltaTime); 
-        keepright = true;
-        }
-        if (transform.position.x > 14f)//Stoppar dodge rörelsen ifall den rör barrieren.
-        {
-           dodgestop = true;
-        }
-       }
-       if (dodgeactive == true)
-       {
-        ReactionTimer += Time.deltaTime;
-        if (ReactionTimer > 0.5f)
-        {
-            ReactNumber = 0;
-            ReactionTimer = 0;
-           dodgeprio = false;
-           dodgestop = false;
-           dodgeactive = false;
-           keepleft = false;
-           keepright = false;
-        }
-       }
-*/
-
-       
 
         //REACT 2 (Hopp)
 
