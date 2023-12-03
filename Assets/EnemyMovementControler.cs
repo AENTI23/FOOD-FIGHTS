@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -26,6 +27,11 @@ public bool Lockgrounddetect = false; // bool för att låsa ground detect så d
     [SerializeField] // Float som fungerar som en timer på hur länge en reaktion ska ske, en rörelse sker under en viss tid.
     float ReactionTimer = 0;
 
+    [SerializeField]
+    float jumptimer = 0;
+
+    
+
 
 
  public bool dodgeswitch = false; // Bool som agerar som en switch för DODGE react så att de sker en gång och inte flera gånger
@@ -40,6 +46,9 @@ public bool Lockgrounddetect = false; // bool för att låsa ground detect så d
 
      [SerializeField]
      float DodgeForce = 0f;
+
+     [SerializeField]
+     bool crouch = false;
 
      [SerializeField]
      float DodgeStartPos = 0f;
@@ -81,10 +90,12 @@ void OnTriggerEnter2D(Collider2D Other)
 {
     if(Other.gameObject.tag == "Walltag" && StartPosGotten == true)
     {
-        touchedwall = true;
-
+      touchedwall = true;
     }
-
+    if(Other.gameObject.tag == "swiftrisbolltag")
+    {
+        crouch = true;
+    }
 }
     // Start is called before the first frame update
     void Start()
@@ -141,12 +152,10 @@ else
             patrolswitch = false;
             animcontrol.SetFloat("SideSwitchFloat", 1);
         }
-
-
-    // Float som innehåller de möjliga siffrorna för reaktioner. (randomizern)
-     float numberrandom = Random.Range(1, 2);
-
      //KOD SOM BESTÄMMER VAD FÖR TYP AV REAKTION SOM SKA HÄNDA
+    // Float som innehåller de möjliga siffrorna för reaktioner. (randomizern)
+     float numberrandom = Random.Range(1, 3);
+
     if (detectTwoScript.closedetectbool == true && RandomNumberLock == true )
     {
         ReactNumber += numberrandom;
@@ -158,8 +167,9 @@ else
     }
 
 
-if(ReactNumber == 1)
+if(ReactNumber == 1 && crouch == false)
 {
+    
     float DodgeSave1 = 0f;
     float dodgecurrentpos;
  dodgeprio = true;
@@ -171,79 +181,65 @@ if(ReactNumber == 1)
     DodgeSave1 += DodgeStopLimit;
      DodgeStopFinal += DodgeSave1;
     StartPosGotten = true;
-    print("Start position" + DodgeStartPos);
-    print("Stop Position" + DodgeStopFinal);
+   // print("Start position" + DodgeStartPos);
+    // print("Stop Position" + DodgeStopFinal);
  }
  body.AddForce(DodgeV);
  dodgecurrentpos = body.transform.position.x;
+ animcontrol.SetBool("Dodge", true);
 if (StartPosGotten == true)
 {
- print("Current pos" + transform.position.x);
+// print("Current pos" + transform.position.x);
  if(dodgecurrentpos > DodgeStopFinal && patrolswitch == false || touchedwall == true)//Dodge to the left
 {
     dodgeprio = false;
-    DodgeStartPos = 0;
+   // DodgeStartPos = 0;
     body.constraints = RigidbodyConstraints2D.FreezePositionX;
+    
 }
 if(dodgecurrentpos > DodgeStopFinal && patrolswitch == true || touchedwall == true) // Dodge to the right 
 {
     dodgeprio = false;
-    DodgeStartPos = 0;
+   // DodgeStartPos = 0;
     body.constraints = RigidbodyConstraints2D.FreezePositionX;
 }
 }
-if(dodgeprio == false)
+if(dodgeprio == false || crouch == true)
 {
     body.constraints = RigidbodyConstraints2D.None;
+    body.constraints = RigidbodyConstraints2D.FreezeRotation;
     StartPosGotten = false;
     touchedwall = false;
-    dodgecurrentpos = 0;
     DodgeStopFinal = 0;
-    DodgeSave1 = 0;
     ReactNumber = 0;
+    DodgeStartPos = 0;
+    animcontrol.SetBool("Dodge", false);
+    dodgeprio = false;
 }
 }
 
 
 //Crouch Dodge
-if(ReactNumber == 2)
+if(ReactNumber == 2 || crouch == true)
 {
     animcontrol.SetBool("Crouch", true);
     dodgeprio = true;
-    Vector2 CrouchDodgeL = Vector2.left * CrouchDodgeForce;
-    Vector2 CrouchDodgeR = Vector2.right * CrouchDodgeForce;
+  ReactionTimer += Time.deltaTime;
+     if (ReactionTimer > 0.5)
+     {
+        animcontrol.SetBool("Crouch", false);
+        ReactNumber = 0;
+        dodgeprio = false;
+        ReactionTimer = 0;
+        crouch = false;
 
-    if(patrolswitch == false)
-    {
-     body.AddForce(CrouchDodgeR);
-     if(body.velocity.x > 7.5f)
-     {
-        dodgeprio = false;
-        ReactNumber = 0;
-        animcontrol.SetBool("Crouch", false);
-     }
-    }
-    if(patrolswitch == true)
-    {
-        print("Moving left");
-     body.AddForce(CrouchDodgeL);
-     if(body.velocity.x > 7.5f)
-     {
-        dodgeprio = false;
-        ReactNumber = 0;
-        animcontrol.SetBool("Crouch", false);
      }
 
-    }
-
+    
 }
 
         //REACT 2 (Hopp)
-
-
-
-    
-
+       
         if(detectGroundScript.grounddetectbool == true && Lockgrounddetect == false && allowjump == true)
         {
             Lockgrounddetect = true;
@@ -258,11 +254,12 @@ if(ReactNumber == 2)
         }
      if (Lockgrounddetect == true)
      {
-            ReactionTimer += Time.deltaTime;
-            if (ReactionTimer > 0.5)
+            jumptimer += Time.deltaTime;
+            if (jumptimer > 0.5)
             {
-                ReactionTimer = 0;
+                jumptimer = 0;
                 Lockgrounddetect = false;
+              
                 
             }
 

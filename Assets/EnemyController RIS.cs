@@ -106,7 +106,7 @@ public class Risenemycontrol : MonoBehaviour
     {
 
      // Float som innehåller de möjliga siffrorna för reaktioner. (randomizern)
-     float randomnumb = Random.Range(1, 7); // Reaktioner counterattack 
+     float randomnumb = Random.Range(1, 6); // Reaktioner counterattack 
      // just nu finns de fyra olika reaktioner men det kan bli 7 olika siffror, det är för att minska antalet counterattacks
      // det blir då chans att en sker blir mindre.
      

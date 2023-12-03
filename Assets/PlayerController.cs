@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Riscontroller : MonoBehaviour
 {
@@ -33,6 +34,9 @@ public class Riscontroller : MonoBehaviour
 
     [SerializeField]
     GameObject ricespawn;
+
+    [SerializeField]
+    GameObject ricespawnrandom;
 
 // SHIFT timer Bar variabler
 [SerializeField]
@@ -102,7 +106,7 @@ Animator animator;
             HPbar.value = hpnow;
             if (hpnow == 0f)
             {
-                Destroy(this.gameObject);
+                SceneManager.LoadScene(2);
             }
         }
         if(Other.gameObject.tag == "Floortag")
@@ -201,7 +205,7 @@ Swiftshtimer += Time.deltaTime;
         if (swiftfire > 0 && Swiftshtimer > 4f)
         {
             swiftbool = true;
-          Instantiate(Swiftbolt, ricespawn.transform.position, Quaternion.identity);
+          Instantiate(Swiftbolt, ricespawnrandom.transform.position, Quaternion.identity);
             Swiftshtimer = 0;
         }
 

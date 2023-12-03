@@ -43,11 +43,7 @@ public class Enemyrisboll : MonoBehaviour
     void Update()
     {
 
-      if (killbool == true)
-      {
-        Destroy(this.gameObject);
-      }
-        if(transform.position.y < -10)
+        if(transform.position.y < -5.5 || killbool == true)
         {
           Destroy(this.gameObject);
         }

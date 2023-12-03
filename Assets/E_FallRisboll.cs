@@ -53,12 +53,10 @@ public class Enemyfallingricecontroller : MonoBehaviour
     void Update()
     {
 
-        
-        
-        if(transform.position.y < -10)
-        {
-         Destroy(this.gameObject);
-         
-        }
+        if(transform.position.y < -5.5)
+      {
+        Destroy(this.gameObject);
+
+      }
     }
 }

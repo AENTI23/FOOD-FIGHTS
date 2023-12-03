@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Security.Cryptography;
 
 public class StartFunctionsSCRIPTS : MonoBehaviour
 {
@@ -122,6 +123,15 @@ public class StartFunctionsSCRIPTS : MonoBehaviour
         {
         SceneManager.LoadScene(1);
         }
+    }
+
+    public void RestartToGame()
+    {
+        SceneManager.LoadScene(1);
+    }
+    public void GoBackToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
 

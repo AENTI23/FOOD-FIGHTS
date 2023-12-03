@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1805415790328969794}
   - component: {fileID: 8877251695276007688}
   - component: {fileID: 9101718934962838212}
+  - component: {fileID: 6204553559375382124}
   m_Layer: 0
   m_Name: GroundAttack Detect
   m_TagString: Attack_Detect_Three
@@ -60,7 +61,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!60 &8877251695276007688
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -68,7 +69,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3631668025916371027}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -106,8 +107,8 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0.31074524, y: 1.2913704}
-      - {x: -3.8416595, y: 1.279047}
-      - {x: -3.825666, y: -1.2358288}
+      - {x: -3.045014, y: 1.2463078}
+      - {x: -3.0181074, y: -1.214003}
       - {x: 0.6883074, y: -1.3728125}
       - {x: 0.9510565, y: 0.30901712}
   m_UseDelaunayMesh: 0
@@ -127,3 +128,48 @@ MonoBehaviour:
   grounddetectbool: 0
   boolstoptimer: 0
   enemyPrefab: {fileID: 0}
+--- !u!61 &6204553559375382124
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3631668025916371027}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1.0092771, y: -0.024647355}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.0185542, y: 2.6228635}
+  m_EdgeRadius: 0

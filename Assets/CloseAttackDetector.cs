@@ -38,7 +38,7 @@ public class TrackingScript : MonoBehaviour
             boolstoptimer += Time.deltaTime;
         }
 
-        if (boolstoptimer > 0.3f)
+        if (boolstoptimer > 0.7f)
         {
             closedetectbool = false;
             boolstoptimer = 0;
