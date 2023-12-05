@@ -426,6 +426,11 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 30.96354, y: 2.06738}
   m_EdgeRadius: 0
+--- !u!1 &357239949 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1780290390006860899, guid: 6c566169bc79b47c383c2e1e05f11819, type: 3}
+  m_PrefabInstance: {fileID: 1477976067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &357239957 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1862798050305996069, guid: 6c566169bc79b47c383c2e1e05f11819, type: 3}
@@ -2185,7 +2190,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bbd87201ec5c48ebb1cc3666736562a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ris: {fileID: 1780290390006860899, guid: 6c566169bc79b47c383c2e1e05f11819, type: 3}
+  ris: {fileID: 357239949}
+  risond: {fileID: 914768629}
 --- !u!1 &1651526167
 GameObject:
   m_ObjectHideFlags: 0
