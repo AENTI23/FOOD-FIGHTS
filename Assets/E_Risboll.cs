@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.WSA;
 
 public class Enemyrisboll : MonoBehaviour
 {
@@ -14,20 +16,19 @@ public class Enemyrisboll : MonoBehaviour
 
     public bool killbool = false;
 
+
     // Start is called before the first frame update
     void Start()
     {
             Rigidbody2D RB = GetComponent<Rigidbody2D>();
-
             Vector2 jumper = new Vector2(-Flightforce, Jumpforce);
             RB.AddForce(jumper);
     }
-
     void OnTriggerEnter2D(Collider2D Other)
     {
         if(Other.gameObject.tag == "Risboll_Tag" || Other.gameObject.tag == "Player" || Other.gameObject.tag == "swiftrisbolltag")
         {
-          killbool = true;
+        killbool = true;
         }
         if(Other.gameObject.tag == "Explode")
         {

@@ -23,7 +23,7 @@ public class TrackingEnemy2 : MonoBehaviour
     {
          if (DodgeOther.gameObject.tag == "Risboll_Tag")
         {
-            detectedpoint += 1f;
+           // detectedpoint += 1f;
            // Debug.Log("CLOSEDETECTED");
         }
 

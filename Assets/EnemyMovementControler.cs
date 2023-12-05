@@ -8,6 +8,14 @@ using UnityEngine;
 
 public class EnemyMovementControler : MonoBehaviour
 {
+
+    [SerializeField]
+    GameObject gun;
+
+    [SerializeField]
+    GameObject ricedeflect;
+
+    public bool shootokay = true;
     public bool patrolswitch = false; // Bool för att byta mellan riktning i patrol rörelsen (ifall den är FALSE röra sig till höger, ifall TRUE rör sig till vänster)
 
     [SerializeField]
@@ -17,6 +25,8 @@ public class EnemyMovementControler : MonoBehaviour
 TrackingScript detectTwoScript; // kod för att få tag på close attack detect boolen
 
 TrackingEnemy2 detectGroundScript; //kod för att få tag på ground react boolen
+
+enemyattackdetect detectscript; // kod för att få tag på transform boolen
 
 public bool RandomNumberLock = true; // Bool för att låsa reaktions nummer randomiseringen så de inte sker flera rörelse reaktioner.
 
@@ -83,7 +93,18 @@ public bool Lockgrounddetect = false; // bool för att låsa ground detect så d
 
      Animator animcontrol;
 
+
+
+     [SerializeField]
+     GameObject MePrefab;
+
+     Transform RisBollPrefab;
+
+    
      
+
+
+    public bool activatedodge = false;
 
 
 void OnTriggerEnter2D(Collider2D Other)
@@ -104,6 +125,7 @@ void OnTriggerEnter2D(Collider2D Other)
         // Få tag på script komponenten för att kunna upptäcka nära attacker.
         detectTwoScript = GameObject.FindWithTag("Attack_Detect_Two").GetComponent<TrackingScript>(); 
         detectGroundScript = GameObject.FindWithTag("Attack_Detect_Three").GetComponent<TrackingEnemy2>();
+        detectscript = GameObject.FindWithTag("Attack_Detect_One").GetComponent<enemyattackdetect>(); 
     }
 
     // Update is called once per frame
@@ -220,11 +242,71 @@ if(dodgeprio == false || crouch == true)
 
 
 //Crouch Dodge
-if(ReactNumber == 2 || crouch == true)
+if(detectscript.transformbool == true)
 {
+    if(GameObject.FindWithTag("Risboll_Tag").activeInHierarchy)  
+     {
+         RisBollPrefab = GameObject.FindWithTag("Risboll_Tag").GetComponent<Transform>();
+         
+     }
+}
+    
+
+float inputer2 = Input.GetAxisRaw("Fire1");
+float yattack = RisBollPrefab.transform.position.y;
+float xattack = RisBollPrefab.transform.position.x;
+float yenemy = MePrefab.transform.position.y;
+float xenemy = MePrefab.transform.position.x;
+
+      Vector2 YattackPos = new Vector2(yattack, yattack);
+
+      Vector2 YenemyPos = new Vector2(yenemy, yenemy);
+
+      Vector2 XattackPos = new Vector2(xattack, xattack);
+
+      Vector2 XenemyPos = new Vector2(xenemy, xenemy);
+
+
+    float XDistance = Vector2.Distance(XenemyPos, XattackPos);
+
+    float YDistance = Vector2.Distance(YenemyPos, YattackPos);
+
+
+if(inputer2 > 0)
+{
+  // print(YDistance + "Y Distance");
+   //print(XDistance + " X Distance");
+   print(XDistance);
+   //Instantiate(RisBollPrefab, RisBollPrefab.transform.position, Quaternion.identity);
+}
+if(YDistance < 5 && XDistance < 3)
+{
+   //print("YDistance");
+   print("Close");
+}
+if(XDistance < 4)
+{
+    print("Close x");
+}
+
+
+if (YDistance < 5 && XDistance < 3 && dodgeprio == false)
+{
+ activatedodge = true;
+}
+
+if(ReactNumber == 2 || crouch == true || activatedodge == true)
+{
+    
     animcontrol.SetBool("Crouch", true);
     dodgeprio = true;
   ReactionTimer += Time.deltaTime;
+  if(transform.position.x > 11.5f && shootokay == true)
+  {
+
+  Instantiate(ricedeflect, gun.transform.position, Quaternion.identity);
+  shootokay = false;
+  }
      if (ReactionTimer > 0.5)
      {
         animcontrol.SetBool("Crouch", false);
@@ -232,6 +314,8 @@ if(ReactNumber == 2 || crouch == true)
         dodgeprio = false;
         ReactionTimer = 0;
         crouch = false;
+        activatedodge = false;
+        shootokay = true;
 
      }
 
@@ -264,6 +348,9 @@ if(ReactNumber == 2 || crouch == true)
             }
 
      }
+
+     //React 3 (Fast i hörn och skjut ricedeflect)
+     
         
     }
 }

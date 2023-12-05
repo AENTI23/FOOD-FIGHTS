@@ -7,6 +7,8 @@ public class enemyattackdetect : MonoBehaviour
     public float detectpoint = 0f;
     public bool detectbool = false;
 
+    public bool transformbool = false;
+
    [SerializeField]
    float boolstoptimer = 0;
 
@@ -26,6 +28,8 @@ public class enemyattackdetect : MonoBehaviour
         {
             detectbool = true;
             boolstoptimer += Time.deltaTime;
+            transformbool = true;
+
         }
 
         if (boolstoptimer > 0.3f)
@@ -33,6 +37,7 @@ public class enemyattackdetect : MonoBehaviour
             detectbool = false;
             boolstoptimer = 0;
             detectpoint = 0;
+            transformbool = false;
         }
     }
 }

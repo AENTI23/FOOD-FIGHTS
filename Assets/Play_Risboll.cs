@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Realrisboll : MonoBehaviour
@@ -19,14 +20,23 @@ public class Realrisboll : MonoBehaviour
     [SerializeField]
     GameObject Explode;
 
+    Transform MeTransform;
+
+
+    
+
+
     // Start is called before the first frame update
     void Start()
     {
+        MeTransform = GetComponent<Transform>();
+
        
             Rigidbody2D RB = GetComponent<Rigidbody2D>();
 
             Vector2 jumper = new Vector2(Flightforce, Jumpforce);
             RB.AddForce(jumper);
+           
     }
 
     void OnTriggerEnter2D(Collider2D Other)
@@ -37,10 +47,15 @@ public class Realrisboll : MonoBehaviour
           Instantiate(Explode, transform.position, Quaternion.identity);
           Destroy(this.gameObject);
           //print("player: I SHOULD DIE NOW");
+          
+        
+
         }
         if(Other.gameObject.tag == "Evilricetag")
         {
-          Destroy(this.gameObject);
+        //  Destroy(this.gameObject);
+           Vector3 sizechang = new Vector3(0.001f, 0,0.001f);
+                     MeTransform.transform.localScale = sizechang;
         }
 
 
@@ -65,9 +80,9 @@ public class Realrisboll : MonoBehaviour
         Destroy(this.gameObject);
         Debug.Log("RISBOLL: Killed by damagecheck");
       }
-        if(transform.position.y < -10)
+        if(transform.position.y < -50)
         {
-          Destroy(this.gameObject);
+        Destroy(this.gameObject);
         }
 
       if(transform.position.y < -5.5)

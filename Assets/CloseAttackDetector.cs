@@ -23,7 +23,7 @@ public class TrackingScript : MonoBehaviour
     {
          if (DodgeOther.gameObject.tag == "Risboll_Tag")
         {
-            closedetectpoint += 1f;
+          //  closedetectpoint += 1f;
            // Debug.Log("CLOSEDETECTED");
         }
 

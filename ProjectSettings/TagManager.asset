@@ -24,6 +24,7 @@ TagManager:
   - DiffButton
   - Floortag
   - Walltag
+  - testingtag
   layers:
   - Default
   - TransparentFX
