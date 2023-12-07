@@ -31,7 +31,8 @@ public class testdistancebolt : MonoBehaviour
 
 
        // transform.position = pos;
-
+Vector2 xposond = new Vector2(xond, xond);
+Vector2 xpos = new Vector2(x, x);
         
       
        // float nyspawn = Random.Range(-0,8, 0,4);
@@ -41,6 +42,7 @@ public class testdistancebolt : MonoBehaviour
        float 
     
     Klong = Vector2.Distance(pos, posond);
+   float Klongx = Vector2.Distance(xpos, xposond);
    
    float inputer = Input.GetAxisRaw("Jump");
    if(Klong < 10)
@@ -63,11 +65,12 @@ print("vomp");
 
 if(inputer2 > 0)
 {
-   print(KlongY);
+   print("Y POSITION" + KlongY);
+    print("X POSITION" + Klongx);
 }
 if(KlongY < 5)
 {
-   print("YDistance");
+  // print("YDistance");
   
 }
     }

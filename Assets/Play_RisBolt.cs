@@ -27,6 +27,10 @@ GameObject explode;
             Destroy(this.gameObject);
             //Debug.Log("RISBOLT: Destroyed by explode");
         }
+        if(Other.gameObject.tag == "Evilricetag")
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     // Update is called once per frame

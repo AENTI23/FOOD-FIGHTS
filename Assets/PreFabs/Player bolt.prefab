@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1496011af38f4cf6b24f35c6089b3b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explode: {fileID: 0}
+  explode: {fileID: 7202186213346497727, guid: eb6dd68a574e04b089ab362155dd0c5c, type: 3}
 --- !u!60 &2635386233945078626
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -128,7 +128,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

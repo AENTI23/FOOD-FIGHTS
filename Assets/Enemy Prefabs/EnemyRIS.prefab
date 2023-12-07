@@ -161,6 +161,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee6e31c9f24b47779dd95e54cc38fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gun: {fileID: 5265416315453715376}
+  ricedeflect: {fileID: 8762340592503187466, guid: 96285a857305341d194caf31ad2cb460, type: 3}
+  shootokay: 1
   patrolswitch: 0
   normalmovespeed: 2.5
   RandomNumberLock: 1
@@ -186,6 +189,11 @@ MonoBehaviour:
   groundRadius: 0.1
   groundWidth: 0.7
   temporarypoint: 0
+  MePrefab: {fileID: 3088599278193414917}
+  temptimer: 0
+  tempbool: 0
+  activatedodge: 0
+  shutdown: 0
 --- !u!95 &7435268041116784799
 Animator:
   serializedVersion: 5

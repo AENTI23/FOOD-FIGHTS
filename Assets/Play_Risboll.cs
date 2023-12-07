@@ -8,6 +8,8 @@ public class Realrisboll : MonoBehaviour
 
   public bool damagecheck = false;
 
+  EnemyMovementControler EMOVESCRIPT;
+
     [SerializeField]
     float Jumpforce = 0;
 
@@ -31,7 +33,7 @@ public class Realrisboll : MonoBehaviour
     {
         MeTransform = GetComponent<Transform>();
 
-       
+        EMOVESCRIPT = GameObject.FindWithTag("Evilricetag").GetComponent<EnemyMovementControler>();
             Rigidbody2D RB = GetComponent<Rigidbody2D>();
 
             Vector2 jumper = new Vector2(Flightforce, Jumpforce);
@@ -51,11 +53,15 @@ public class Realrisboll : MonoBehaviour
         
 
         }
-        if(Other.gameObject.tag == "Evilricetag")
+        if(Other.gameObject.tag == "Evilricetag" || Other.gameObject.tag == "E_Attack_Tag")
         {
-        //  Destroy(this.gameObject);
-           Vector3 sizechang = new Vector3(0.001f, 0,0.001f);
-                     MeTransform.transform.localScale = sizechang;
+         //  Vector3 sizechang = new Vector3(0.001f, 0,0.001f);
+          //           MeTransform.transform.localScale = sizechang;
+          EMOVESCRIPT.shutdown = true;
+          EMOVESCRIPT.allowshutdown = true;
+          print("ShutDown true");
+        Destroy(this.gameObject);
+          
         }
 
 
@@ -88,6 +94,9 @@ public class Realrisboll : MonoBehaviour
       if(transform.position.y < -5.5)
       {
         Destroy(this.gameObject);
+        EMOVESCRIPT.shutdown = true;
+        EMOVESCRIPT.allowshutdown = true;
+        print ("allow?" + EMOVESCRIPT.allowshutdown);
 
       }
     }

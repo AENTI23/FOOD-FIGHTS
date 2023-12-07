@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyMovementControler : MonoBehaviour
 {
@@ -100,23 +103,33 @@ public bool Lockgrounddetect = false; // bool för att låsa ground detect så d
 
      Transform RisBollPrefab;
 
-    
+     Transform SwiftBoltPrefab;
      
+[SerializeField]
+float temptimer;
 
+[SerializeField]
+public bool ActivateTracking = false;
 
+public bool ActivateSwiftTracking = false;
     public bool activatedodge = false;
 
+    public bool ActivateJump = false;
 
+    public bool shutdown = false;
+
+    public bool allowshutdown = false;
+
+    bool allowjump;
+
+  private Vector3 GroundCheckSize() => new Vector3(groundWidth, groundRadius);
 void OnTriggerEnter2D(Collider2D Other)
 {
     if(Other.gameObject.tag == "Walltag" && StartPosGotten == true)
     {
       touchedwall = true;
     }
-    if(Other.gameObject.tag == "swiftrisbolltag")
-    {
-        crouch = true;
-    }
+   
 }
     // Start is called before the first frame update
     void Start()
@@ -137,13 +150,226 @@ void OnTriggerEnter2D(Collider2D Other)
         Gizmos.DrawWireCube(groundCheck.position, size);
     }
 
-    private Vector3 GroundCheckSize() => new Vector3(groundWidth, groundRadius);
-    void Update()
+   public void CrouchMethod()
+
     {
+     
+      if(shutdown == false)
+      {
+        if(GameObject.FindWithTag("Risboll_Tag").activeInHierarchy && shutdown == false)  
+     {
+         RisBollPrefab = GameObject.FindWithTag("Risboll_Tag").GetComponent<Transform>();
+     }
+      }
+float yattack = RisBollPrefab.transform.position.y;
+float xattack = RisBollPrefab.transform.position.x;
+float yenemy = MePrefab.transform.position.y;
+float xenemy = MePrefab.transform.position.x;
+
+      Vector2 YattackPos = new Vector2(yattack, yattack);
+
+      Vector2 YenemyPos = new Vector2(yenemy, yenemy);
+
+      Vector2 XattackPos = new Vector2(xattack, xattack);
+
+      Vector2 XenemyPos = new Vector2(xenemy, xenemy);
+
+
+    float XDistance = Vector2.Distance(XenemyPos, XattackPos);
+
+    float YDistance = Vector2.Distance(YenemyPos, YattackPos);
+
+
+
+
+if (YDistance < 5 && XDistance < 3 && dodgeprio == false)
+{
+ activatedodge = true;
+ print ("Close.... activating!");
+}
+
+if(activatedodge == true && allowshutdown == false)
+{
+    crouch = true;
+    allowshutdown = false;
+    animcontrol.SetBool("Crouch", true);
+    dodgeprio = true;
+  ReactionTimer += Time.deltaTime;
+  if(transform.position.x > 12f && shootokay == true)
+  {
+  shootokay = false;
+  Instantiate(ricedeflect, gun.transform.position, Quaternion.identity);
+  print("CORNERED SHOOT SHOOT");
+  }
+
+ if (ReactionTimer > 0.5 || shutdown == true)
+ {
+    animcontrol.SetBool("Crouch", false);
+     dodgeprio = false;
+     ReactionTimer = 0;
+     activatedodge = false;
+     shootokay = true;
+    ActivateTracking = false;
+    shutdown = false;
+    crouch = false;
+    print ("timer ended it");
+     }
+}
+    }
+public void DodgeMethod()
+{
+    if(ReactNumber == 1 && crouch == false)
+{
+    
+    float DodgeSave1 = 0f;
+    float dodgecurrentpos;
+ dodgeprio = true;
+ Vector2 DodgeV = Vector2.right * DodgeForce;
+ if(StartPosGotten == false)
+ {
+    DodgeStartPos = body.transform.position.x;
+    DodgeSave1 += DodgeStartPos;
+    DodgeSave1 += DodgeStopLimit;
+     DodgeStopFinal += DodgeSave1;
+    StartPosGotten = true;
+ }
+ body.AddForce(DodgeV);
+ dodgecurrentpos = body.transform.position.x;
+ animcontrol.SetBool("Dodge", true);
+if (StartPosGotten == true)
+{
+// print("Current pos" + transform.position.x);
+ if(dodgecurrentpos > DodgeStopFinal && patrolswitch == false || touchedwall == true)//Dodge to the left
+{
+    dodgeprio = false;
+   // DodgeStartPos = 0;
+    body.constraints = RigidbodyConstraints2D.FreezePositionX;
+}
+if(dodgecurrentpos > DodgeStopFinal && patrolswitch == true || touchedwall == true) // Dodge to the right 
+{
+    dodgeprio = false;
+   // DodgeStartPos = 0;
+    body.constraints = RigidbodyConstraints2D.FreezePositionX;
+}
+}
+if(dodgeprio == false || crouch == true)
+{
+    body.constraints = RigidbodyConstraints2D.None;
+    body.constraints = RigidbodyConstraints2D.FreezeRotation;
+    StartPosGotten = false;
+    touchedwall = false;
+    DodgeStopFinal = 0;
+    ReactNumber = 0;
+    DodgeStartPos = 0;
+    animcontrol.SetBool("Dodge", false);
+    dodgeprio = false;
+}
+}
+}
+
+public void JumpMethod()
+{
+       //REACT 2 (Hopp)
+    if(GameObject.FindWithTag("swiftrisbolltag").activeInHierarchy)
+    {
+ SwiftBoltPrefab = GameObject.FindWithTag("swiftrisbolltag").GetComponent<Transform>();
+    }
+
+    float ySwift = SwiftBoltPrefab.transform.position.y;
+    float xSwift = SwiftBoltPrefab.transform.position.x;
+
+float yenemy = MePrefab.transform.position.y;
+float xenemy = MePrefab.transform.position.x;
+
+ Vector2 YSwiftPos = new Vector2(ySwift, ySwift);
+
+      Vector2 YenemyPos = new Vector2(yenemy, yenemy);
+
+      Vector2 XSwiftPos = new Vector2(xSwift, xSwift);
+
+      Vector2 XenemyPos = new Vector2(xenemy, xenemy);
+
+
+    float XDistance = Vector2.Distance(XenemyPos, XSwiftPos);
+
+    float YDistance = Vector2.Distance(YenemyPos, YSwiftPos);
+       
+
+       if(YDistance < 2f && XDistance < 8.5f)
+       {
+        ActivateJump = true;
+       }
+        if(ActivateJump == true && allowjump == true)
+        {
+            if(ActivateTracking == true)
+            {
+                shutdown = true;
+                allowshutdown = true;
+            }
+          //  Lockgrounddetect = true;
+            temporarypoint += 1f;
+        }
+        if (temporarypoint == 1f)
+        {
+            temporarypoint = 0;
+            Vector2 JumpV = Vector2.up * JumpForce;
+
+            body.AddForce(JumpV);
+            ActivateJump = false;
+            ActivateSwiftTracking = false;
+        }
+        /*
+     if (Lockgrounddetect == true)
+     {
+            jumptimer += Time.deltaTime;
+            if (jumptimer > 0.5)
+            {
+                jumptimer = 0;
+                Lockgrounddetect = false;   
+            }
+     } 
+     */
+     
+
+}
+    void Update()
+    {  
+
+        if(shutdown == true && allowshutdown == true)
+        {
+            animcontrol.SetBool("Crouch", false);
+     dodgeprio = false;
+     ReactionTimer = 0;
+     activatedodge = false;
+     shootokay = true;
+    ActivateTracking = false;
+    shutdown = false;
+    allowshutdown = false;
+    crouch = false;
+        }
+        
+        if(ActivateTracking == true && shutdown == false && allowshutdown == false)
+        {
+            CrouchMethod();
+        }
+        if(detectscript.transformbool == true)
+        {
+            ActivateTracking = true;
+        }
+
+if (detectscript.Swiftbool == true)
+{
+    ActivateSwiftTracking = true;
+}
+if(ActivateSwiftTracking == true)
+{
+    JumpMethod();
+}
+
         // Rörelse variabeler och vectorer
     Vector2 normalmovement = new Vector2(normalmovespeed, 0);
     Vector3 size = GroundCheckSize();
-    bool allowjump = Physics2D.OverlapBox(groundCheck.position, size, 0, groundLayer);
+    allowjump = allowjump = Physics2D.OverlapBox(groundCheck.position, size, 0, groundLayer);
 if (allowjump == true)
 {
   animcontrol.SetBool("Jumping", false);
@@ -176,7 +402,7 @@ else
         }
      //KOD SOM BESTÄMMER VAD FÖR TYP AV REAKTION SOM SKA HÄNDA
     // Float som innehåller de möjliga siffrorna för reaktioner. (randomizern)
-     float numberrandom = Random.Range(1, 3);
+     float numberrandom = Random.Range(1, 2);
 
     if (detectTwoScript.closedetectbool == true && RandomNumberLock == true )
     {
@@ -188,7 +414,7 @@ else
         RandomNumberLock = true;
     }
 
-
+/*
 if(ReactNumber == 1 && crouch == false)
 {
     
@@ -217,7 +443,6 @@ if (StartPosGotten == true)
     dodgeprio = false;
    // DodgeStartPos = 0;
     body.constraints = RigidbodyConstraints2D.FreezePositionX;
-    
 }
 if(dodgecurrentpos > DodgeStopFinal && patrolswitch == true || touchedwall == true) // Dodge to the right 
 {
@@ -239,93 +464,16 @@ if(dodgeprio == false || crouch == true)
     dodgeprio = false;
 }
 }
-
-
-//Crouch Dodge
-if(detectscript.transformbool == true)
-{
-    if(GameObject.FindWithTag("Risboll_Tag").activeInHierarchy)  
-     {
-         RisBollPrefab = GameObject.FindWithTag("Risboll_Tag").GetComponent<Transform>();
-         
-     }
-}
-    
-
-float inputer2 = Input.GetAxisRaw("Fire1");
-float yattack = RisBollPrefab.transform.position.y;
-float xattack = RisBollPrefab.transform.position.x;
-float yenemy = MePrefab.transform.position.y;
-float xenemy = MePrefab.transform.position.x;
-
-      Vector2 YattackPos = new Vector2(yattack, yattack);
-
-      Vector2 YenemyPos = new Vector2(yenemy, yenemy);
-
-      Vector2 XattackPos = new Vector2(xattack, xattack);
-
-      Vector2 XenemyPos = new Vector2(xenemy, xenemy);
-
-
-    float XDistance = Vector2.Distance(XenemyPos, XattackPos);
-
-    float YDistance = Vector2.Distance(YenemyPos, YattackPos);
-
-
-if(inputer2 > 0)
-{
-  // print(YDistance + "Y Distance");
-   //print(XDistance + " X Distance");
-   print(XDistance);
-   //Instantiate(RisBollPrefab, RisBollPrefab.transform.position, Quaternion.identity);
-}
-if(YDistance < 5 && XDistance < 3)
-{
-   //print("YDistance");
-   print("Close");
-}
-if(XDistance < 4)
-{
-    print("Close x");
-}
-
-
-if (YDistance < 5 && XDistance < 3 && dodgeprio == false)
-{
- activatedodge = true;
-}
-
-if(ReactNumber == 2 || crouch == true || activatedodge == true)
-{
-    
-    animcontrol.SetBool("Crouch", true);
-    dodgeprio = true;
-  ReactionTimer += Time.deltaTime;
-  if(transform.position.x > 11.5f && shootokay == true)
-  {
-
-  Instantiate(ricedeflect, gun.transform.position, Quaternion.identity);
-  shootokay = false;
-  }
-     if (ReactionTimer > 0.5)
-     {
-        animcontrol.SetBool("Crouch", false);
-        ReactNumber = 0;
-        dodgeprio = false;
-        ReactionTimer = 0;
-        crouch = false;
-        activatedodge = false;
-        shootokay = true;
-
-     }
-
-    
-}
-
+*/
         //REACT 2 (Hopp)
-       
+     /*  
         if(detectGroundScript.grounddetectbool == true && Lockgrounddetect == false && allowjump == true)
         {
+            if(ActivateTracking == true)
+            {
+                shutdown = true;
+                allowshutdown = true;
+            }
             Lockgrounddetect = true;
             temporarypoint += 1f;
         }
@@ -342,15 +490,9 @@ if(ReactNumber == 2 || crouch == true || activatedodge == true)
             if (jumptimer > 0.5)
             {
                 jumptimer = 0;
-                Lockgrounddetect = false;
-              
-                
+                Lockgrounddetect = false;   
             }
-
-     }
-
-     //React 3 (Fast i hörn och skjut ricedeflect)
-     
-        
+     } 
+     */   
     }
 }
