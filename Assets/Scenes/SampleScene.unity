@@ -2362,7 +2362,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6c9854fba12c043bcb0c8be1cb07d794, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ea1da9b55666d42f7af1aba70cd82692, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2382,8 +2382,8 @@ Transform:
   m_GameObject: {fileID: 1558105630}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.76, y: -2.62, z: 1.0057341}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 7.04, y: -0.63, z: 1.0057341}
+  m_LocalScale: {x: 2.7, y: 2.7, z: 2.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -2570,37 +2570,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0307198, y: 15.764881}
   m_EdgeRadius: 0
---- !u!1 &1878496547
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1878496548}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1878496548
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1878496547}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.16963536, y: -6.5, z: -3.314478}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1948633695
 GameObject:
   m_ObjectHideFlags: 0
@@ -2898,14 +2867,6 @@ PrefabInstance:
     - target: {fileID: 3088599278193414917, guid: b1b3dccf2d4f245cd8aa717f41b4c168, type: 3}
       propertyPath: m_Name
       value: Ondrisguy
-      objectReference: {fileID: 0}
-    - target: {fileID: 4246982271295444371, guid: b1b3dccf2d4f245cd8aa717f41b4c168, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6302961464770338911, guid: b1b3dccf2d4f245cd8aa717f41b4c168, type: 3}
-      propertyPath: JumpForce
-      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 6302961464770338911, guid: b1b3dccf2d4f245cd8aa717f41b4c168, type: 3}
       propertyPath: m_Enabled
@@ -3264,6 +3225,5 @@ SceneRoots:
   - {fileID: 28112954431378991}
   - {fileID: 8383758322252770075}
   - {fileID: 2010772845}
-  - {fileID: 1878496548}
   - {fileID: 407954623}
   - {fileID: 1558105633}

@@ -103,6 +103,8 @@ public bool Lockgrounddetect = false; // bool för att låsa ground detect så d
 
      Transform RisBollPrefab;
 
+     Transform RisBollDodgePrefab;
+
      Transform SwiftBoltPrefab;
      
 [SerializeField]
@@ -112,6 +114,10 @@ float temptimer;
 public bool ActivateTracking = false;
 
 public bool ActivateSwiftTracking = false;
+
+public bool ActivateDodgeTracking = false;
+
+public bool activatecrouch = false;
     public bool activatedodge = false;
 
     public bool ActivateJump = false;
@@ -184,11 +190,11 @@ float xenemy = MePrefab.transform.position.x;
 
 if (YDistance < 5 && XDistance < 3 && dodgeprio == false)
 {
- activatedodge = true;
- print ("Close.... activating!");
+ activatecrouch = true;
+ //print ("Close.... activating!");
 }
 
-if(activatedodge == true && allowshutdown == false)
+if(activatecrouch == true && allowshutdown == false)
 {
     crouch = true;
     allowshutdown = false;
@@ -199,7 +205,7 @@ if(activatedodge == true && allowshutdown == false)
   {
   shootokay = false;
   Instantiate(ricedeflect, gun.transform.position, Quaternion.identity);
-  print("CORNERED SHOOT SHOOT");
+  //print("CORNERED SHOOT SHOOT");
   }
 
  if (ReactionTimer > 0.5 || shutdown == true)
@@ -207,20 +213,49 @@ if(activatedodge == true && allowshutdown == false)
     animcontrol.SetBool("Crouch", false);
      dodgeprio = false;
      ReactionTimer = 0;
-     activatedodge = false;
+     activatecrouch= false;
      shootokay = true;
     ActivateTracking = false;
     shutdown = false;
     crouch = false;
-    print ("timer ended it");
+   // print ("timer ended it");
      }
 }
     }
-public void DodgeMethod()
+public void DodgeMethod() // DODGE METHOD GJORt SÅ ATT CROUCH buggar typ och dodge funkar inte alls. 
 {
-    if(ReactNumber == 1 && crouch == false)
+
+    if(GameObject.FindWithTag("Risboll_Tag").activeInHierarchy && shutdown == false)  
+     {
+         RisBollDodgePrefab = GameObject.FindWithTag("Risboll_Tag").GetComponent<Transform>();
+     }
+
+float yattackdodge = RisBollDodgePrefab.transform.position.y;
+float xattackdodge = RisBollDodgePrefab.transform.position.x;
+float yenemydodge = MePrefab.transform.position.y;
+float xenemydodge = MePrefab.transform.position.x;
+
+      Vector2 YattackDPos = new Vector2(yattackdodge, yattackdodge);
+
+      Vector2 XattackDPos = new Vector2(xattackdodge, xattackdodge);
+
+      Vector2 YenemyDPos = new Vector2(yenemydodge, yenemydodge);
+
+      Vector2 XenemyDPos = new Vector2(xenemydodge, xenemydodge);
+
+
+    float XDistanceDodge = Vector2.Distance(XenemyDPos, XattackDPos);
+
+    float YDistanceDodge = Vector2.Distance(YenemyDPos, YattackDPos);
+
+    if(YDistanceDodge < 1.7f && XDistanceDodge < 8f && crouch == false)
+    {
+        activatedodge = true;
+    }
+
+if(activatedodge == true)
 {
-    
+
     float DodgeSave1 = 0f;
     float dodgecurrentpos;
  dodgeprio = true;
@@ -242,14 +277,13 @@ if (StartPosGotten == true)
  if(dodgecurrentpos > DodgeStopFinal && patrolswitch == false || touchedwall == true)//Dodge to the left
 {
     dodgeprio = false;
-   // DodgeStartPos = 0;
     body.constraints = RigidbodyConstraints2D.FreezePositionX;
 }
 if(dodgecurrentpos > DodgeStopFinal && patrolswitch == true || touchedwall == true) // Dodge to the right 
 {
     dodgeprio = false;
-   // DodgeStartPos = 0;
     body.constraints = RigidbodyConstraints2D.FreezePositionX;
+}
 }
 }
 if(dodgeprio == false || crouch == true)
@@ -263,7 +297,8 @@ if(dodgeprio == false || crouch == true)
     DodgeStartPos = 0;
     animcontrol.SetBool("Dodge", false);
     dodgeprio = false;
-}
+    activatedodge = false;
+    ActivateDodgeTracking = false;
 }
 }
 
@@ -290,17 +325,19 @@ float xenemy = MePrefab.transform.position.x;
       Vector2 XenemyPos = new Vector2(xenemy, xenemy);
 
 
-    float XDistance = Vector2.Distance(XenemyPos, XSwiftPos);
+    float XDistanceSwift = Vector2.Distance(XenemyPos, XSwiftPos);
 
-    float YDistance = Vector2.Distance(YenemyPos, YSwiftPos);
+    float YDistanceSwift = Vector2.Distance(YenemyPos, YSwiftPos);
        
-
-       if(YDistance < 2f && XDistance < 8.5f)
+//print(XDistanceSwift);
+print(YDistanceSwift);
+       if(YDistanceSwift < 3.3f && XDistanceSwift < 8.5f)
        {
         ActivateJump = true;
        }
         if(ActivateJump == true && allowjump == true)
         {
+            
             if(ActivateTracking == true)
             {
                 shutdown = true;
@@ -335,12 +372,13 @@ float xenemy = MePrefab.transform.position.x;
     void Update()
     {  
 
+
         if(shutdown == true && allowshutdown == true)
         {
             animcontrol.SetBool("Crouch", false);
      dodgeprio = false;
      ReactionTimer = 0;
-     activatedodge = false;
+     activatecrouch = false;
      shootokay = true;
     ActivateTracking = false;
     shutdown = false;
@@ -355,6 +393,11 @@ float xenemy = MePrefab.transform.position.x;
         if(detectscript.transformbool == true)
         {
             ActivateTracking = true;
+            ActivateDodgeTracking = true;
+        }
+        if(ActivateDodgeTracking == true)
+        {
+            DodgeMethod();
         }
 
 if (detectscript.Swiftbool == true)

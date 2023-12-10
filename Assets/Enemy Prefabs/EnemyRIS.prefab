@@ -175,7 +175,7 @@ MonoBehaviour:
   dodgeprio: 0
   dodgestop: 0
   body: {fileID: 4246982271295444371}
-  JumpForce: 900
+  JumpForce: 700
   DodgeForce: 6
   crouch: 0
   DodgeStartPos: 0
@@ -191,9 +191,12 @@ MonoBehaviour:
   temporarypoint: 0
   MePrefab: {fileID: 3088599278193414917}
   temptimer: 0
-  tempbool: 0
+  ActivateTracking: 0
+  ActivateSwiftTracking: 0
   activatedodge: 0
+  ActivateJump: 0
   shutdown: 0
+  allowshutdown: 0
 --- !u!95 &7435268041116784799
 Animator:
   serializedVersion: 5
