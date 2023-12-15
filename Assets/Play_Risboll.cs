@@ -24,6 +24,8 @@ public class Realrisboll : MonoBehaviour
 
     Transform MeTransform;
 
+    public bool Debugbool = false;
+
 
     
 
@@ -31,35 +33,43 @@ public class Realrisboll : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      
         MeTransform = GetComponent<Transform>();
 
         EMOVESCRIPT = GameObject.FindWithTag("Evilricetag").GetComponent<EnemyMovementControler>();
             Rigidbody2D RB = GetComponent<Rigidbody2D>();
-
+        if(Debugbool == false)
+        {
             Vector2 jumper = new Vector2(Flightforce, Jumpforce);
             RB.AddForce(jumper);
-           
+        }
+        if(Debugbool == true)
+        {
+
+           RB.constraints = RigidbodyConstraints2D.FreezePositionY;
+           RB.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D Other)
     {
       
-        if(Other.gameObject.tag == "E_Attack_Tag")
+        if(Other.gameObject.tag == "E_Attack_Tag" && Debugbool == false)
         {
           Instantiate(Explode, transform.position, Quaternion.identity);
           Destroy(this.gameObject);
           //print("player: I SHOULD DIE NOW");
-          
+          EMOVESCRIPT.shutdown = true;
+          EMOVESCRIPT.allowshutdown = true;
         
 
         }
-        if(Other.gameObject.tag == "Evilricetag" || Other.gameObject.tag == "E_Attack_Tag")
+        if(Other.gameObject.tag == "Evilricetag" && Debugbool == false|| Other.gameObject.tag == "E_Attack_Tag" && Debugbool == false)
         {
          //  Vector3 sizechang = new Vector3(0.001f, 0,0.001f);
           //           MeTransform.transform.localScale = sizechang;
           EMOVESCRIPT.shutdown = true;
           EMOVESCRIPT.allowshutdown = true;
-          print("ShutDown true");
         Destroy(this.gameObject);
           
         }
@@ -80,7 +90,8 @@ public class Realrisboll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      if(damagecheck == true)
+
+      if(damagecheck == true && Debugbool == false)
       {
         damagecheck = false;
         Destroy(this.gameObject);
@@ -96,8 +107,12 @@ public class Realrisboll : MonoBehaviour
         Destroy(this.gameObject);
         EMOVESCRIPT.shutdown = true;
         EMOVESCRIPT.allowshutdown = true;
-        print ("allow?" + EMOVESCRIPT.allowshutdown);
-
       }
+      if(Debugbool == true)
+        {
+          Rigidbody2D RB = GetComponent<Rigidbody2D>();
+           RB.constraints = RigidbodyConstraints2D.FreezePositionY;
+           RB.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
     }
 }

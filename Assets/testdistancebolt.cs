@@ -51,8 +51,8 @@ Vector2 xpos = new Vector2(x, x);
    }
 if (inputer > 0)
 {
-print("vomp");
-   print(Klong);
+//print("vomp");
+   //print(Klong);
 }
 
 //Kollar Y distans

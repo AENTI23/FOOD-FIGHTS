@@ -38,7 +38,7 @@ GameObject explode;
 
 
 
-        if(transform.position.x < -15 || killbool == true || transform.position.y < -15.5)
+        if(transform.position.x < -15 || killbool == true || transform.position.y < -7.5)
         {
             Destroy(this.gameObject);
         }

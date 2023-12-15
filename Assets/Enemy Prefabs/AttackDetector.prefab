@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4192572974762377233}
   - component: {fileID: 7601487535167920452}
   - component: {fileID: 5243371571454963304}
+  - component: {fileID: 8502890204733063954}
   m_Layer: 0
   m_Name: AttackDetector
   m_TagString: Attack_Detect_One
@@ -65,7 +66,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -8.522822, y: 1.2816219}
+  m_Offset: {x: -6.461417, y: 1.2816219}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -76,7 +77,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 19.123846, y: 15.863857}
+  m_Size: {x: 23.246656, y: 15.863857}
   m_EdgeRadius: 0
 --- !u!114 &5243371571454963304
 MonoBehaviour:
@@ -91,5 +92,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectpoint: 0
+  Swiftpoint: 0
   detectbool: 0
-  dodgestoptimer: 0
+  transformbool: 0
+  Swiftbool: 0
+  boolstoptimer: 0
+  SwiftBoolStopTimer: 0
+--- !u!50 &8502890204733063954
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8285381619825683524}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 7

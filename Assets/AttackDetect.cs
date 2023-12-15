@@ -30,6 +30,7 @@ public class enemyattackdetect : MonoBehaviour
         if(Dodgeother.gameObject.tag == "swiftrisbolltag")
         {
             Swiftpoint += 1f;
+            print("SwiftDetected");
         }
     }
     // Update is called once per frame

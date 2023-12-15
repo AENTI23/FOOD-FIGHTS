@@ -10,6 +10,7 @@ public class Riscontroller : MonoBehaviour
 
     public bool swiftbool = false;
 
+
     [SerializeField]
     float movespeed = 1f;
 
@@ -79,10 +80,21 @@ float ShiftTimer = 0f;
 
     bool mayJump = true; //Mayjump blir true ifall man inte klickat på hopp flera gånger
 
+    [SerializeField]
+    AudioSource JumpSound;
+
+    [SerializeField]
+    AudioSource WalkSound;
+
+    [SerializeField]
+    AudioSource Hitsound;
+
+    [SerializeField]
+    AudioSource CrouchSound;
+
 // Animation variabler
 
 Animator animator;
-
 
 
 
@@ -94,8 +106,7 @@ Animator animator;
         //Healthbar värdesättning
         hpnow = maximalhp;
         HPbar.maxValue = maximalhp;
-        HPbar.value = maximalhp;
-       
+        HPbar.value = maximalhp;  
     }
 
     void OnTriggerEnter2D(Collider2D Other)
@@ -104,6 +115,7 @@ Animator animator;
         {
             hpnow -= 1f;
             HPbar.value = hpnow;
+            Hitsound.Play();
             if (hpnow == 0f)
             {
                 SceneManager.LoadScene(2);
@@ -119,6 +131,9 @@ Animator animator;
     // Update is called once per frame
     void Update()
     {
+    
+
+      
       //Keybinds
     float bollfire = Input.GetAxisRaw("Fire1");
     float swiftfire = Input.GetAxisRaw("Fire2");
@@ -142,33 +157,34 @@ Animator animator;
 
      if(movebutton == 1)
      {
+        WalkSound.enabled = true;
         animator.SetFloat("Xinput", 1f);
         animator.SetBool("IsWalking", true);
      }
      else if(movebutton == -1)
      {
+        WalkSound.enabled = true;
         animator.SetFloat("Xinput", -1f);
         animator.SetBool("IsWalking", true);
      }
      if(movebutton == 0)
      {
+        WalkSound.enabled = false;
         animator.SetBool("IsWalking", false);
      }
      if(crouch == 1)
      {
         animator.SetBool("Crouching", true);
+        CrouchSound.Play();
+
      }
      if(crouch == 0)
      {
         animator.SetBool("Crouching", false);
      }
      
-      
-//print(animator.GetBool("IsWalking"));
 
-    
 
-     // if (Movement)
 // Jump KOD
  Vector3 size = MakeGroundcheckSize();
 bool jumpswitch = Physics2D.OverlapBox(groundCheck.position, size, 0, groundLayer); // en bool som är positiv ifall groundcheck nuddar marken.
@@ -180,19 +196,12 @@ bool jumpswitch = Physics2D.OverlapBox(groundCheck.position, size, 0, groundLaye
             RB.AddForce(jumper);
             mayJump = false;
             animator.SetBool("IsJumping", true);
-           
+            JumpSound.Play();
          }
         if (jumpbutton == 0)
         {
             mayJump = true;
         }
-//Barrier kod.//Byt ut till Collider!
-/*
-        if (transform.position.x > -1 || transform.position.x < -14)
-        {
-            transform.Translate(-Movement);
-        }
-        */
 // Risboll attack kod
  shtimer += Time.deltaTime;
 if (bollfire > 0 && shtimer > 1)

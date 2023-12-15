@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Play_RisBolt : MonoBehaviour
 {
+      EnemyMovementControler EMOVESCRIPT;
+
     // Start is called before the first frame update
 [SerializeField]
 GameObject explode;
@@ -11,25 +13,32 @@ GameObject explode;
     
     void Start()
     {
-        
+     EMOVESCRIPT = GameObject.FindWithTag("Evilricetag").GetComponent<EnemyMovementControler>();
+
     }
 
     void OnTriggerEnter2D(Collider2D Other)
     {
-        if(Other.gameObject.tag == "E_Attack_Tag")
+        if(Other.gameObject.tag == "E_Attack_Tag" + "Explode")
         {
             Instantiate(explode, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
+            EMOVESCRIPT.jumpshutdown = true;
+            EMOVESCRIPT.allowjumpshutdown = true;
         }
         if(Other.gameObject.tag == "Explode")
         {
             Instantiate(explode, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
+            EMOVESCRIPT.jumpshutdown = true;
+            EMOVESCRIPT.allowjumpshutdown = true;
             //Debug.Log("RISBOLT: Destroyed by explode");
         }
         if(Other.gameObject.tag == "Evilricetag")
         {
             Destroy(this.gameObject);
+            EMOVESCRIPT.jumpshutdown = true;
+            EMOVESCRIPT.allowjumpshutdown = true;
         }
     }
 
@@ -45,6 +54,8 @@ GameObject explode;
 
         if(transform.position.x > 15 || killbool == true)
         {
+            EMOVESCRIPT.jumpshutdown = true;
+            EMOVESCRIPT.allowjumpshutdown = true;
             Destroy(this.gameObject);
         }
     }

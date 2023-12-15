@@ -28,7 +28,25 @@ public class StartFunctionsSCRIPTS : MonoBehaviour
     Image MapButton;
 
     [SerializeField]
+    GameObject BlackCurtain;
+
+    [SerializeField]
+    GameObject SpawnTop;
+
+    [SerializeField]
+    GameObject SpawnBottom;
+
+    [SerializeField]
     TextMeshProUGUI StartText;
+
+    [SerializeField]
+    GameObject loadingtext;
+
+    [SerializeField]
+    AudioSource Errorsound;
+
+    [SerializeField]
+    AudioSource Approved;
 
     bool chara = false;
     bool map = false;
@@ -36,6 +54,12 @@ public class StartFunctionsSCRIPTS : MonoBehaviour
     bool diffu = false;
 
     int one = 1;
+
+    float Changescenetimer = 0;
+
+    bool startloading = false;
+
+    bool once = false;
 
 
     // Start is called before the first frame update
@@ -113,7 +137,7 @@ public class StartFunctionsSCRIPTS : MonoBehaviour
         {
             StartButton.color = Color.red;
             StartText.text = "Select!";
-
+            Errorsound.Play();
         }
     }
 
@@ -121,7 +145,12 @@ public class StartFunctionsSCRIPTS : MonoBehaviour
     {
         if(diffu == true && map == true && chara == true)
         {
-        SceneManager.LoadScene(1);
+        Approved.Play();
+        StartButton.color = Color.green;
+            StartText.text = "Loading!";
+            startloading = true;
+            Instantiate(BlackCurtain, SpawnBottom.transform.position, Quaternion.identity);
+            Instantiate(BlackCurtain, SpawnTop.transform.position, Quaternion.Euler(0, 0, -180));
         }
     }
 
@@ -133,6 +162,22 @@ public class StartFunctionsSCRIPTS : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+void Update()
+{
+    if(startloading == true)
+    {
+        if(once == false)
+        {
+     loadingtext.SetActive(true);
+       once = true;
+        }
+       
+         Changescenetimer += Time.deltaTime;
 
-
+ if(Changescenetimer > 2f)
+        {
+        SceneManager.LoadScene(1);
+        }
+    }
+}
 }
