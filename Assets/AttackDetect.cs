@@ -6,7 +6,7 @@ public class enemyattackdetect : MonoBehaviour
 {
     public float detectpoint = 0f;
 
-    public float Swiftpoint = 0f;
+    public int Swiftpoint = 0;
     public bool detectbool = false;
 
     public bool transformbool = false;
@@ -29,7 +29,7 @@ public class enemyattackdetect : MonoBehaviour
         }
         if(Dodgeother.gameObject.tag == "swiftrisbolltag")
         {
-            Swiftpoint += 1f;
+            Swiftpoint += 1;
             print("SwiftDetected");
         }
     }
@@ -52,12 +52,12 @@ public class enemyattackdetect : MonoBehaviour
             transformbool = false;
         }
 
-        if(Swiftpoint > 0)
+        if(Swiftpoint == 1)
         {
             Swiftbool = true;
             SwiftBoolStopTimer += Time.deltaTime;
         }
-        if (SwiftBoolStopTimer > 0.3f)
+        if (SwiftBoolStopTimer > 0.5f)
         {
             Swiftbool = false;
             SwiftBoolStopTimer = 0;

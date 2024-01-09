@@ -26,6 +26,8 @@ public class E_RiceDeflectV2 : MonoBehaviour
     {
         timer += Time.deltaTime;
 
+      if(transform.position.x < 8)
+      {
         if(timer > 0.1 && one == false)
         {
             Instantiate(Ricebolt, transform.position, Quaternion.Euler (0,0,-180));
@@ -59,5 +61,42 @@ public class E_RiceDeflectV2 : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+      }
+      else if(transform.position.x > 8 || transform.position.x == 8)
+      {
+        if(timer > 0.1 && one == false)
+        {
+            Instantiate(Ricebolt, transform.position, Quaternion.Euler (0,0,-180));
+            one = true;
+        }
+        if(timer > 0.2 && two == false)
+        {
+             Instantiate(Ricebolt, transform.position, Quaternion.Euler (0,0,-190));
+             Instantiate(Ricebolt, transform.position, Quaternion.Euler (0,0,-200));
+             two = true;
+        }
+        if(timer > 0.3 && three == false)
+        {
+             Instantiate(Ricebolt, transform.position, Quaternion.Euler (0,0,-220));
+             Instantiate(Ricebolt, transform.position, Quaternion.Euler (0,0,-210));
+             three = true;
+        }
+        if(timer > 0.4 && four == false)
+        {
+             Instantiate(Ricebolt, transform.position, Quaternion.Euler (0,0,-240));
+             Instantiate(Ricebolt, transform.position, Quaternion.Euler (0,0,-230));
+             four = true;
+        }
+        if(timer == 0.5 && five == false)
+        {
+             Instantiate(Ricebolt, transform.position, Quaternion.Euler (0,0,-260));
+             Instantiate(Ricebolt, transform.position, Quaternion.Euler (0,0,-250));
+             five = true;
+        }
+        if (timer > 0.7f)
+        {
+            Destroy(this.gameObject);
+        }
+      }
     }
 }

@@ -23,22 +23,16 @@ GameObject explode;
         {
             Instantiate(explode, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
-            EMOVESCRIPT.jumpshutdown = true;
-            EMOVESCRIPT.allowjumpshutdown = true;
         }
         if(Other.gameObject.tag == "Explode")
         {
             Instantiate(explode, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
-            EMOVESCRIPT.jumpshutdown = true;
-            EMOVESCRIPT.allowjumpshutdown = true;
             //Debug.Log("RISBOLT: Destroyed by explode");
         }
         if(Other.gameObject.tag == "Evilricetag")
         {
             Destroy(this.gameObject);
-            EMOVESCRIPT.jumpshutdown = true;
-            EMOVESCRIPT.allowjumpshutdown = true;
         }
     }
 
@@ -54,8 +48,6 @@ GameObject explode;
 
         if(transform.position.x > 15 || killbool == true)
         {
-            EMOVESCRIPT.jumpshutdown = true;
-            EMOVESCRIPT.allowjumpshutdown = true;
             Destroy(this.gameObject);
         }
     }

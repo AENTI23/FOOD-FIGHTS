@@ -8,7 +8,7 @@ public class Realrisboll : MonoBehaviour
 
   public bool damagecheck = false;
 
-  EnemyMovementControler EMOVESCRIPT;
+  
 
     [SerializeField]
     float Jumpforce = 0;
@@ -22,9 +22,14 @@ public class Realrisboll : MonoBehaviour
     [SerializeField]
     GameObject Explode;
 
+    [SerializeField]
+    GameObject RedCircle;
+
     Transform MeTransform;
 
     public bool Debugbool = false;
+
+    public bool trackdebugbool = false;
 
 
     
@@ -36,7 +41,6 @@ public class Realrisboll : MonoBehaviour
       
         MeTransform = GetComponent<Transform>();
 
-        EMOVESCRIPT = GameObject.FindWithTag("Evilricetag").GetComponent<EnemyMovementControler>();
             Rigidbody2D RB = GetComponent<Rigidbody2D>();
         if(Debugbool == false)
         {
@@ -59,17 +63,13 @@ public class Realrisboll : MonoBehaviour
           Instantiate(Explode, transform.position, Quaternion.identity);
           Destroy(this.gameObject);
           //print("player: I SHOULD DIE NOW");
-          EMOVESCRIPT.shutdown = true;
-          EMOVESCRIPT.allowshutdown = true;
-        
-
+      
         }
         if(Other.gameObject.tag == "Evilricetag" && Debugbool == false|| Other.gameObject.tag == "E_Attack_Tag" && Debugbool == false)
         {
          //  Vector3 sizechang = new Vector3(0.001f, 0,0.001f);
           //           MeTransform.transform.localScale = sizechang;
-          EMOVESCRIPT.shutdown = true;
-          EMOVESCRIPT.allowshutdown = true;
+      
         Destroy(this.gameObject);
           
         }
@@ -90,6 +90,10 @@ public class Realrisboll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      if(trackdebugbool == true)
+      {
+        Instantiate(RedCircle, transform.position, Quaternion.identity);
+      }
 
       if(damagecheck == true && Debugbool == false)
       {
@@ -105,8 +109,6 @@ public class Realrisboll : MonoBehaviour
       if(transform.position.y < -5.5)
       {
         Destroy(this.gameObject);
-        EMOVESCRIPT.shutdown = true;
-        EMOVESCRIPT.allowshutdown = true;
       }
       if(Debugbool == true)
         {

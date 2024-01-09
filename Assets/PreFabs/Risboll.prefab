@@ -210,7 +210,9 @@ MonoBehaviour:
   Flightforce: 600
   slash: {fileID: 444321615806189614, guid: 8f282e618ad2548b093953c1b266e2a5, type: 3}
   Explode: {fileID: 7202186213346497727, guid: eb6dd68a574e04b089ab362155dd0c5c, type: 3}
+  RedCircle: {fileID: 1121484236663261585, guid: 30594857c66b343eeb064b83d85b4a89, type: 3}
   Debugbool: 0
+  trackdebugbool: 0
 --- !u!60 &3068823953746768627
 PolygonCollider2D:
   m_ObjectHideFlags: 0

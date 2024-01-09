@@ -132,6 +132,7 @@ Animator animator;
     void Update()
     {
     
+   
 
       
       //Keybinds
@@ -147,12 +148,22 @@ Animator animator;
      {
         Vector2 Movement = new Vector2(movebutton, 0) * movespeed * Time.deltaTime;
         transform.Translate(Movement);
+         //Barrier
+    if(transform.position.x < -12.7f || transform.position.x > -1.25f)
+    {
+        transform.Translate(-Movement);
+    }
      }
      else if(animator.GetBool("Crouching") == true)
      {
 
      Vector2 Movement = new Vector2(movebutton, 0) * crouchspeed * Time.deltaTime;
      transform.Translate(Movement);
+      //Barrieraa
+    if(transform.position.x < -12.7f || transform.position.x > -1.25f)
+    {
+        transform.Translate(-Movement);
+    }
      }
 
      if(movebutton == 1)
